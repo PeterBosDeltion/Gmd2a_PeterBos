@@ -1,6 +1,0 @@
-Fantasy dungeon keeper
-
-1. Keep prisoners(fantasy mosnters like slimes etc.) from escaping -Core
-2. Torture them for information(quick time events or something) -2nd
-3. Gather a set amount of information -Progression
-4. Share information willingly with someone that has power over you or get hurt(or killed). -Narrative
