@@ -6,12 +6,17 @@ public class Enemy : MonoBehaviour {
     public GameObject targetGate;
     public GameObject exit;
 
+    public Vector3 startPos;
 
     public float speed;
     public bool canAttack;
 
+    public int infoAvailable;
+    public bool isTired;
+
 	// Use this for initialization
 	void Start () {
+        startPos = transform.position;
         canAttack = true;
         GameObject[] gates;
         gates = GameObject.FindGameObjectsWithTag("Gate");
@@ -33,8 +38,13 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        AttackGate();
-        Move();
+
+        if (!isTired)
+        {
+            AttackGate();
+            Move();
+
+        }
     }
 
     public void Move()
@@ -69,5 +79,49 @@ public class Enemy : MonoBehaviour {
     {
         yield return new WaitForSeconds(3);
         canAttack = true;
+    }
+
+    public void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(1) && !TortManager.isTorturing)
+        {
+            transform.position = TortManager.tortPos;
+            TortManager.beingTorted = gameObject;
+            infoAvailable = Random.Range(10, 100);
+            TortManager.isTorturing = true;
+        }
+        else if (Input.GetMouseButtonDown(1) && TortManager.beingTorted == gameObject)
+        {
+            TortManager.Leave();
+           
+        }
+        else if (Input.GetMouseButtonDown(0) && TortManager.beingTorted == gameObject)
+        {
+            if(infoAvailable > 0)
+            {
+                int i = Random.Range(10, 40);
+                infoAvailable -= i;
+                TortManager.infoGathered += i;
+            }
+            if(infoAvailable <= 0)
+            {
+                GetComponent<MeshRenderer>().material.color = Color.black;
+                isTired = true;
+            }
+        }
+    }
+
+    public IEnumerator Recover()
+    {
+        yield return new WaitForSeconds(Random.Range(9, 16));
+        isTired = false;
+        GetComponent<MeshRenderer>().material.color = Color.red;
+    }
+
+    public void Frozen()
+    {
+        GetComponent<MeshRenderer>().material.color = Color.blue;
+        isTired = true;
+        StartCoroutine(Recover());
     }
 }

@@ -18,6 +18,7 @@ public class Exit : MonoBehaviour {
     {
         if(other.tag == "Enemy")
         {
+            Gamemanager.enims.Remove(other.gameObject);
             Destroy(other.gameObject);
             //Penalty or something
         }

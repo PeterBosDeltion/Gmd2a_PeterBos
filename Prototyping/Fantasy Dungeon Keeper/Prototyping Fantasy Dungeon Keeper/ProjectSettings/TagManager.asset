@@ -8,6 +8,7 @@ TagManager:
   - Gate
   - Exit
   - Enemy
+  - TortPos
   layers:
   - Default
   - TransparentFX
