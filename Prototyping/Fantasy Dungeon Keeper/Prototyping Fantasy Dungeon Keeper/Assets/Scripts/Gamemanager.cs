@@ -17,12 +17,19 @@ public class Gamemanager : MonoBehaviour {
     public bool canFreeze;
 
     public GameObject firePrefab;
+    public GameObject fireButton;
     public bool targeting;
     public bool canWall;
 
+    public GameObject repairParts;
+    public bool canRep;
+
     public LineRenderer ln;
+
+    public Vector3 camStart;
     // Use this for initialization
     void Start() {
+        camStart = Camera.main.transform.position;
         GameObject[] e = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject g in e)
         {
@@ -31,6 +38,7 @@ public class Gamemanager : MonoBehaviour {
         canFreeze = true;
         ln = GetComponent<LineRenderer>();
         canWall = true;
+        canRep = true;
     }
 
     // Update is called once per frame
@@ -65,12 +73,12 @@ public class Gamemanager : MonoBehaviour {
         Application.Quit();
     }
 
-    public void Freeze()
+    public void Freeze(GameObject button)
     {
         if (canFreeze)
         {
             freezeParticles.SetActive(true);
-            StartCoroutine(FreezeCool());
+            StartCoroutine(FreezeCool(button));
             foreach (GameObject g in enims)
             {
                 g.GetComponent<Enemy>().Frozen();
@@ -79,13 +87,14 @@ public class Gamemanager : MonoBehaviour {
         }
     }
 
-    IEnumerator FreezeCool()
+    IEnumerator FreezeCool(GameObject button)
     {
         yield return new WaitForSeconds(0.5F);
         freezeParticles.SetActive(false);
 
         yield return new WaitForSeconds(35);
         canFreeze = true;
+        button.SetActive(true);
     }
 
     public void ToggleFireDome()
@@ -119,6 +128,7 @@ public class Gamemanager : MonoBehaviour {
                 canWall = false;
                 Cursor.SetCursor(defCurs, Vector2.zero, CursorMode.Auto);
                 Destroy(g, 5);
+                fireButton.SetActive(false);
                 StartCoroutine(FireCool());
             }
         }
@@ -128,6 +138,45 @@ public class Gamemanager : MonoBehaviour {
     {
         yield return new WaitForSeconds(20);
         canWall = true;
+        fireButton.SetActive(true);
 
+    }
+
+    public void RepairWave(GameObject button)
+    {
+        if (canRep)
+        {
+            GameObject[] b = GameObject.FindGameObjectsWithTag("Repbutton");
+
+            foreach (GameObject g in b)
+            {
+               RepairButton rp = g.GetComponent<RepairButton>();
+
+                rp.Repair();
+                rp.Repair();
+                rp.InvokeSound();
+           
+            }
+
+            repairParts.SetActive(true);
+            StartCoroutine(RepairCool(button));
+            canRep = false;
+
+        }
+    }
+
+    public IEnumerator RepairCool(GameObject button)
+    {
+        yield return new WaitForSeconds(1);
+        repairParts.SetActive(false);
+
+        yield return new WaitForSeconds(35);
+        canRep = true;
+        button.SetActive(true);
+    }
+
+    public void GoHome()
+    {
+        Camera.main.transform.position = camStart;
     }
 }

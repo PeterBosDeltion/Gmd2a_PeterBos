@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour {
     public int infoAvailable;
     public bool isTired;
 
+    public AudioClip oof;
+    public AudioSource audio;
+
 	// Use this for initialization
 	void Start () {
         startPos = transform.position;
@@ -34,6 +37,7 @@ public class Enemy : MonoBehaviour {
         }
 
         exit = GameObject.FindGameObjectWithTag("Exit");
+        audio = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -102,6 +106,8 @@ public class Enemy : MonoBehaviour {
                 int i = Random.Range(10, 40);
                 infoAvailable -= i;
                 TortManager.infoGathered += i;
+
+                audio.PlayOneShot(oof, 1F);
             }
             if(infoAvailable <= 0)
             {

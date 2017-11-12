@@ -9,6 +9,7 @@ TagManager:
   - Exit
   - Enemy
   - TortPos
+  - Repbutton
   layers:
   - Default
   - TransparentFX
