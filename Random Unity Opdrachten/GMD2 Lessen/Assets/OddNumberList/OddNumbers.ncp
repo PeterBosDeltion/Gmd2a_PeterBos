@@ -7,7 +7,7 @@
       <Entity type="Class">
         <Name>NumberTest</Name>
         <Access>Public</Access>
-        <Location left="476" top="124" />
+        <Location left="165" top="163" />
         <Size width="269" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">void Start()</Member>
