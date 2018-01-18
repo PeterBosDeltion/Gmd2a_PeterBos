@@ -975,7 +975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6959208a52ca18146b98a0f482bf05e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oreType: Iron Ore
+  resourcetype: Iron Ore
 --- !u!135 &135559969490154318
 SphereCollider:
   m_ObjectHideFlags: 1

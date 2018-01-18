@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ore : MonoBehaviour {
-    public string oreType;
+public class Ore : Resource {
 	// Use this for initialization
 	void Start () {
 		

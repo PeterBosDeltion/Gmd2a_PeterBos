@@ -100,10 +100,17 @@ public class WoodCutter : Npc {
 
             if(target != null)
             {
-                inventory.Add(target.GetComponent<Tree>().woodType); //Add de geminede ore aan de inventory
+                Tree tree = target.GetComponent<Tree>();
+                if (tree != null)
+                {
+                    inventory.Add(tree.GetComponent<Resource>().resourcetype); //Add de geminede ore aan de inventory
+                }
             }
 
-            Destroy(target.gameObject); //Vernietigd de ore
+            if(target.tag.Contains("Tree"))
+            {
+                Destroy(target.gameObject); //Vernietigd de ore
+            }
 
             if (inventory.Count < maxInvSize) //Als er nog ruimte is in de inventory gaat het object verder met minen
             {

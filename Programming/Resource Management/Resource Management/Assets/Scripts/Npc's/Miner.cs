@@ -100,10 +100,17 @@ public class Miner : Npc {
 
             if(target != null)
             {
-                inventory.Add(target.GetComponent<Ore>().oreType); //Add de geminede ore aan de inventory
+                Ore ore = target.GetComponent<Ore>();
+                if(ore != null)
+                {
+                    inventory.Add(ore.GetComponent<Resource>().resourcetype); //Add de geminede ore aan de inventory
+                }
             }
 
-            Destroy(target.gameObject); //Vernietigd de ore
+            if (target.tag.Contains("Ore"))
+            {
+                Destroy(target.gameObject); //Vernietigd de ore
+            }
 
             if (inventory.Count < maxInvSize) //Als er nog ruimte is in de inventory gaat het object verder met minen
             {

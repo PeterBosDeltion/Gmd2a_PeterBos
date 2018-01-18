@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tree : Resource {
+public class Resource : MonoBehaviour {
+    public string resourcetype;
 	// Use this for initialization
 	void Start () {
 		

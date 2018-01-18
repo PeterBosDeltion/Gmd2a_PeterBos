@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88050cc2a9f10be4fba675c352ba4d83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  woodType: Oak Log
+  resourcetype: Oak Log
 --- !u!208 &208008783756216738
 NavMeshObstacle:
   m_ObjectHideFlags: 1

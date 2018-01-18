@@ -65,7 +65,7 @@ public class Soldier : Npc {
         }
         else if(state == States.Fight && target != null && !idling && !cooldown) //Dit doet hetzelfde als hierboven alleen dan in de Fight state
         {
-            if(target.transform.position != enemyStartPos)
+            if(target.transform.position != enemyStartPos && Vector3.Distance(transform.position, target.transform.position) > myWeapon.attackRange)
             {
                 agent.SetDestination(target.transform.position);
                 enemyStartPos = target.transform.position;

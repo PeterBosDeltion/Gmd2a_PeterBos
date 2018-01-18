@@ -7,6 +7,7 @@ public class BlackSmith : Npc {
     private int amountOfOreNeeded;
     private string oreNeeded;
     private GameObject thingToMake;
+    private GameObject weaponToMake;
 
     private bool coolingDown;
     private bool smeltedOre;
@@ -18,7 +19,7 @@ public class BlackSmith : Npc {
         GetMyComponents();
         SetState(States.Idle);
         SetThingToMake(cm.allWeapons[0]); //Zet het ding om te maken naar een zwaard
-     
+        SetWeaponToMake(cm.allWeapons[0]);
     }
 
     // Update is called once per frame
@@ -69,7 +70,7 @@ public class BlackSmith : Npc {
         }
 	}
 
-    void SetThingToMake(GameObject makeThis) //Dit zet het ding dat gemaakt moet worden
+    public void SetThingToMake(GameObject makeThis) //Dit zet het ding dat gemaakt moet worden
     {
         thingToMake = makeThis;
         Weapon w = thingToMake.GetComponent<Weapon>();
@@ -79,6 +80,12 @@ public class BlackSmith : Npc {
             amountOfOreNeeded = thingToMake.GetComponent<Weapon>().amounOfBarsNeeded; //Zet het aantal ore dat nodig is voor dit wapen
         }
 
+    }
+
+    public void SetWeaponToMake(GameObject weapon)
+    {
+        weaponToMake = weapon;
+        SetThingToMake(weapon);
     }
 
     IEnumerator Idle() //Object doet niets
@@ -159,7 +166,13 @@ public class BlackSmith : Npc {
             }
             if (!smeltedOre && hasOre) //Als er ore in de inventory zit en het is nog niet gesmolten
             {
-                SetThingToMake(cm.allBars[0]); //Zet het ding om te maken naar een iron bar
+                foreach (GameObject r in cm.allBars)
+                {
+                    if(r.GetComponent<Bar>().barType == weaponToMake.GetComponent<Weapon>().barNeeded)
+                    {
+                        SetThingToMake(r); //Zet het ding om te maken naar een iron bar
+                    }
+                }
                 SetTarget("SmithFurnace"); //Ga naar het furnace
                 Smelt(); //Smelt de ore
             }
@@ -245,7 +258,7 @@ public class BlackSmith : Npc {
                 }
             }
 
-            SetThingToMake(cm.allWeapons[0]); //Zet het object om te maken naar een zwaard
+            SetThingToMake(weaponToMake); //Zet het object om te maken naar een zwaard
             smeltedOre = true; //Reset bools
             hasOre = false;
         }
