@@ -1,2 +1,5 @@
 Voor de lowpoly versie's heb ik die instant mesh tool gebruikt aangezien ik de conform brush in max niet werkend kon krijgen.
 Ik wou nog vragen hoe de conform brush werkte in de les maar u was ziek.
+
+
+(P.S, de fotoscan bestanden zelf waren te groot om op github te zetten om een of andere reden)
